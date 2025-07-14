@@ -1,0 +1,32 @@
+:root {
+  /* colors */
+  --color-purple-050: #F8F7FF;
+  --color-purple-100: #E7DDFF;
+  --color-purple-200: #8B5CF6;
+  --color-purple-300: #6A3FCB;
+
+  --color-white: #FFFFFF;
+  --color-gray-100: #E2E2E2;
+  --color-gray-200: #3F4658;
+  --color-gray-300: #1E1E1E;
+
+  /* fonts */
+  --ff-heading: 'Sora', sans-serif;
+  --ff-body: 'Inter', sans-serif;
+
+  --fs-xl: 32px;
+  --fs-lg: 24px;
+  --fs-base: 16px;
+  --fs-md: 14px;
+  --fs-sm: 14px;
+
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --font-title: normal    var(--fw-bold)      var(--fs-xl)var(--ff-heading);
+  --font-body-lg: normal  var(--fw-medium)    var(--fs-lg)var(--ff-body);
+  --font-body-md: normal  var(--fw-medium)    var(--fs-md)var(--ff-body);
+  --font-body-sm: normal  var(--fw-medium)    var(--fs-sm)var(--ff-body);
+  --font-button: normal   var(--fw-semibold)  var(--fs-sm)  var(--ff-body);
+}
