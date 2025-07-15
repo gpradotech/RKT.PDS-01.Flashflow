@@ -25,29 +25,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
+  <header class="page-header">
     <h1>FlashTalk</h1>
     <p>Seu gerador de debates favorito.</p>
+  </header>
+  
+  <main>
+    <div class="main-header">
+      <p class="contador">Card 1 de 5</p>
+      <div class="filtro">
+        <button class="filtro-botao">
+          <span>Todos os níveis</span>
+          <i class="ph ph-caret-down" aria-hidden="true"></i>
+        </button>
 
-    <main>
-      <div class="controles">
-        <p class="contador">Card 1 de 5</p>
-        <div class="filtro">
-          <button class="filtro-botao">
-            <span>Todos os níveis</span>
-            <i class="ph ph-caret-down" aria-hidden="true"></i>
-          </button>
+        <div class="filtro-opcoes">
+          <div class="filtro-heading">Dificuldade</div>
+          <button class="filtro-opcao ativado" data-nivel="1" data-todos="true"> <span>Todos os níveis</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
+          <button class="filtro-opcao ativado" data-nivel="2"> <span>Fácil</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
+          <button class="filtro-opcao ativado" data-nivel="3"> <span>Médio</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
+          <button class="filtro-opcao ativado" data-nivel="4"> <span>Difícil</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
+        </div>    
+      </div>
+    </div>
 
-          <div class="filtro-opcoes">
-            <div class="filtro-heading">Dificuldade</div>
-            <button class="filtro-opcao ativado" data-nivel="1" data-todos="true"> <span>Todos os níveis</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
-            <button class="filtro-opcao ativado" data-nivel="2"> <span>Fácil</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
-            <button class="filtro-opcao ativado" data-nivel="3"> <span>Médio</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
-            <button class="filtro-opcao ativado" data-nivel="4"> <span>Difícil</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
+    <div class="cards">
+      <div class="card">
+        <header class="card-header">
+          <span>Esporte</span>
+          <span>M001</span>
+        </header>
+
+        <div class="card-content">
+          <h2>Respeito às Minorias</h2>
+          <p>Como combater os casos de desrespeito às minorias no futebol?</p>
         </div>
       </div>
-    </main>
-  </header>
+    </div>
+
+    <p class="main-footer">Clique no card para ver a resposta</p>
+  </main>
+
 
   <script src="scripts.js"></script>
 </body>

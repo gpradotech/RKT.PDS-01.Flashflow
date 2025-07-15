@@ -41,6 +41,7 @@
 html, body {
   font-family: var(--ff-body);
   color: var(--color-gray-200);
+  line-height: 130%;
 }
 
 h1 {
@@ -48,7 +49,12 @@ h1 {
   color: var(--color-purple-200);
 }
 
-header {
+h2 {
+  font: var(--font-body-lg);
+  color: var(--color-gray-300);
+}
+
+.page-header {
   display: grid;
   gap: 8px;
   justify-content: center;
@@ -57,11 +63,14 @@ header {
 }
 
 main {
-  width: 324px;
-  margin-block: 48px 32px; 
+  width: 272px;
+  margin-block: 48px 32px;
+  margin-inline: auto;
+  display: grid;
+  gap: 24px;
 }
 
-.controles {
+.main-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -111,7 +120,7 @@ main {
   padding-block: 8px;
 
   display: none;
-  right: 0px;
+  right: -10px;
   animation: fadeIn 0.2s ease-in-out;
 }
 
@@ -129,6 +138,7 @@ main {
 .filtro-opcoes.ativado {
   display: block;
   z-index: 1;
+  background: var(--color-white);
 }
 
 .filtro-heading,
@@ -169,3 +179,34 @@ main {
   .filtro-opcao.ativado .ph-check {
     opacity: 1;
   }
+
+  .card {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-100);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0px 45px 12px 0px rgba(0, 0, 0, 0.00), 0px 29px 11px 0px rgba(0, 0, 0, 0.01), 0px 16px 10px 0px rgba(0, 0, 0, 0.05), 0px 7px 7px 0px rgba(0, 0, 0, 0.09), 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+    min-height: 240px;
+    height: 100%;
+
+    cursor: pointer;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    height: 100%;
+}
+
+.main-footer {
+  font: var(--font-body-sm);
+  text-align: center;
+}

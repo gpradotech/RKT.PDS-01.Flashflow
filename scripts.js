@@ -22,6 +22,7 @@ function atualizarTextoBotao() {
 
 const caret = filtroBotao.querySelector('.ph.ph-caret-down');
 
+// Adiciona evento de clique no botão de filtro
 filtroBotao.addEventListener('click', function(e) {
   e.stopPropagation();
   filtroOpcoes.classList.toggle('ativado');
@@ -35,6 +36,7 @@ filtroBotao.addEventListener('click', function(e) {
   atualizarTextoBotao();
 });
 
+// Rotaciona caret ao clicar fora do botão
 document.addEventListener('click', function(e) {
   if (filtroOpcoes.classList.contains('ativado')) {
     if (!filtroOpcoes.contains(e.target) && !filtroBotao.contains(e.target)) {
@@ -64,8 +66,9 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
 // Atualiza ao carregar
 atualizarTextoBotao();
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 
+// Lógica para ativar/desativar opções de filtro
 document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
   opcao.addEventListener('click', function() {
     const todasOpcoes = Array.from(document.querySelectorAll('.filtro-opcao'));
@@ -139,4 +142,34 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
   });
 });
 
-//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+const flashcards = [
+	{
+    difficulty: 1,
+    category: "Esporte",
+    id: "F001",
+    title: "Respeito às Minorias",
+		question: "Como combater os casos de desrespeito às minorias no futebol?",
+		answer: "Combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes."
+	},
+  {
+    difficulty: 1,
+    category: "Esporte",
+    id: "F002",
+    title: "Respeito às Minorias",
+		question: "Como combater os casos de desrespeito às minorias no futebol?",
+		answer: "Combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes."
+	},
+  {
+    difficulty: 1,
+    category: "Esporte",
+    id: "F003",
+    title: "Respeito às Minorias",
+		question: "Como combater os casos de desrespeito às minorias no futebol?",
+		answer: "Combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes."
+	},
+];
+
+////////////////////////////////////////////////////////////////////////////////////
+
