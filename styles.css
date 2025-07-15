@@ -99,7 +99,7 @@ main {
 }
 
 .ph.ph-caret-down.rotacionado {
-  transform: rotate(180deg);
+  transform: rotate(-180deg);
 }
 
 .filtro-opcoes {
@@ -111,13 +111,24 @@ main {
   padding-block: 8px;
 
   display: none;
+  right: 0px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .filtro-opcoes.ativado {
   display: block;
   z-index: 1;
-  top: 100%;
-  right: 0;
 }
 
 .filtro-heading,
