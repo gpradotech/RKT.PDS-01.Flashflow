@@ -38,6 +38,10 @@
   box-sizing: border-box;
 }
 
+.hidden {
+  display: none !important;
+}
+
 html, body {
   font-family: var(--ff-body);
   color: var(--color-gray-200);
@@ -91,6 +95,8 @@ main {
   display: flex;
   gap: 4px;
   align-items: center;
+
+  transition: opacity 0.1s ease-in-out;
 }
 
 .filtro-botao:hover {
@@ -185,28 +191,90 @@ main {
     border: 1px solid var(--color-gray-100);
     border-radius: 16px;
     padding: 24px;
-    box-shadow: 0px 45px 12px 0px rgba(0, 0, 0, 0.00), 0px 29px 11px 0px rgba(0, 0, 0, 0.01), 0px 16px 10px 0px rgba(0, 0, 0, 0.05), 0px 7px 7px 0px rgba(0, 0, 0, 0.09), 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+    box-shadow: 0px 29px 11px 0px rgba(0, 0, 0, 0.01), 0px 16px 10px 0px rgba(0, 0, 0, 0.03), 0px 7px 7px 0px rgba(0, 0, 0, 0.04), 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
     min-height: 240px;
     height: 100%;
 
     cursor: pointer;
+    transition: all 0.2s linear;
+  }
+
+  .card:hover,
+  .card.back:hover {
+    background: var(--color-purple-050);
+    box-shadow: 0px 29px 11px 0px rgba(0, 0, 0, 0.01), 0px 16px 10px 0px rgba(0, 0, 0, 0.02), 0px 7px 7px 0px rgba(0, 0, 0, 0.02), 0px 2px 4px 0px rgba(0, 0, 0, 0.02);
+
+    transform: scale(1.02);
+  }
+
+  .card.back {
+    background: var(--color-purple-100);
+    text-align: center;
+    color: var(--color-gray-300);
+  }
+  
+  .answer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-bottom: 16px;
   }
 
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font: var(--font-body-sm);
+    opacity: 0.75;
   }
 
   .card-content {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    justify-content: center;
+    justify-content: start;
+    padding-top: 16px;
     height: 100%;
 }
 
 .main-footer {
   font: var(--font-body-sm);
   text-align: center;
+}
+
+.page-footer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn {
+  display: flex;
+  width: 133.841px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 8px;
+  background: var(--color-purple-300);
+  border: none;
+  color: var(--color-white);
+  font: var(--font-button);
+
+  transition: background 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--color-purple-200);
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 1px solid var(--color-purple-300);
+  color: var(--color-purple-300);
+}
+
+.btn.secondary:hover {
+  background: var(--color-purple-100);
 }

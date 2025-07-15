@@ -32,7 +32,7 @@
   
   <main>
     <div class="main-header">
-      <p class="contador">Card 1 de 5</p>
+      <p class="indicador">Card 1 de 5</p>
       <div class="filtro">
         <button class="filtro-botao">
           <span>Todos os níveis</span>
@@ -50,22 +50,27 @@
     </div>
 
     <div class="cards">
-      <div class="card">
+      <div class="card front" id="card-1" data-nivel="1" data-tipo="educação">
         <header class="card-header">
-          <span>Esporte</span>
-          <span>M001</span>
+          <span class="category">Esporte</span>
+          <span class="difficulty">M001</span>
         </header>
 
         <div class="card-content">
-          <h2>Respeito às Minorias</h2>
-          <p>Como combater os casos de desrespeito às minorias no futebol?</p>
+          <h2 class="title">Respeito às Minorias</h2>
+          <p class="question">Como combater os casos de desrespeito às minorias no futebol?</p>
+          <p class="answer hidden">Combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes.</p>
         </div>
       </div>
     </div>
 
-    <p class="main-footer">Clique no card para ver a resposta</p>
+    <p class="main-footer">Clique no card para ver a dica</p>
   </main>
 
+  <footer class="page-footer">
+    <button class="btn secondary" id="btn-anterior">Card Anterior</button>
+    <button class="btn primary" id="btn-proximo">Próximo Card</button>
+  </footer>
 
   <script src="scripts.js"></script>
 </body>
