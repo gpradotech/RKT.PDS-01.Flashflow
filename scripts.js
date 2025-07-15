@@ -1,6 +1,7 @@
 const filtroBotao = document.querySelector('.filtro-botao');
 const filtroOpcoes = document.querySelector('.filtro-opcoes');
 
+// Atualiza texto do botão de filtro
 function atualizarTextoBotao() {
   const opcoes = Array.from(document.querySelectorAll('.filtro-opcao'));
   const selecionadas = opcoes.filter(o => o.classList.contains('ativado') && !o.dataset.todos);
@@ -22,7 +23,7 @@ function atualizarTextoBotao() {
 
 const caret = filtroBotao.querySelector('.ph.ph-caret-down');
 
-// Adiciona evento de clique no botão de filtro
+// Alterna painel de opções e rotaciona caret
 filtroBotao.addEventListener('click', function(e) {
   e.stopPropagation();
   filtroOpcoes.classList.toggle('ativado');
@@ -36,7 +37,7 @@ filtroBotao.addEventListener('click', function(e) {
   atualizarTextoBotao();
 });
 
-// Rotaciona caret ao clicar fora do botão
+// Fecha painel ao clicar fora
 document.addEventListener('click', function(e) {
   if (filtroOpcoes.classList.contains('ativado')) {
     if (!filtroOpcoes.contains(e.target) && !filtroBotao.contains(e.target)) {
@@ -47,19 +48,10 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Fecha painel ao clicar fora
-document.addEventListener('click', function(e) {
-  if (filtroOpcoes.classList.contains('ativado')) {
-    if (!filtroOpcoes.contains(e.target) && !filtroBotao.contains(e.target)) {
-      filtroOpcoes.classList.remove('ativado');
-    }
-  }
-});
-
 // Atualiza texto do botão sempre que uma opção for clicada
 document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
   opcao.addEventListener('click', function() {
-    setTimeout(atualizarTextoBotao, 0); // Aguarda atualização das classes
+    setTimeout(atualizarTextoBotao, 0);
   });
 });
 
@@ -86,7 +78,7 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
         if (icone) icone.setAttribute('aria-label', 'Ativado');
       });
     } else {
-      // NOVO: Se todas as opções (exceto "Todos os níveis") estão ativas, ao clicar em uma delas, deixa só ela ativa
+      // Se todas as opções (exceto "Todos os níveis") estão ativas, ao clicar em uma delas, deixa só ela ativa
       const todasAtivadas = outras.every(o => o.classList.contains('ativado'));
       if (todasAtivadas) {
         outras.forEach(o => {
@@ -139,47 +131,74 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
         if (iconeTodos) iconeTodos.setAttribute('aria-label', 'Desativado');
       }
     }
+    // Atualiza os cards filtrados
+    setTimeout(() => {
+      renderizarCartao();
+      atualizarIndicador();
+    }, 0);
   });
 });
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 const flashcards = [
-	{
+    {
     difficulty: 2,
     category: "Esporte",
     id: "001",
-    title: "Respeito às Minorias",
-		question: "Como combater os casos de desrespeito às minorias no futebol?",
-		answer: "Combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes."
-	},
+    title: "Respeito às minorias",
+        question: "Como combater os casos de desrespeito às minorias no futebol?",
+        answer: "Debate o combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes."
+    },
   {
     difficulty: 1,
     category: "Culinária",
     id: "002",
-    title: "Feijão no Arroz",
-		question: "O feijão vai por cima ou por baixo do arroz?",
-		answer: "Debate a ordem ideal de servir feijão e arroz, focando em sabor e textura."
-	},
+    title: "Feijão no arroz",
+        question: "O feijão vai por cima ou por baixo do arroz?",
+        answer: "Debate a ordem ideal de servir feijão e arroz, focando em sabor e textura."
+    },
   {
     difficulty: 3,
     category: "Política",
     id: "003",
     title: "Desmilitarização da Polícia",
-		question: "A polícia deveria ser uma força civil e não militarizada?",
-		answer: "Discute se a polícia deve ser civil para focar na comunidade e reduzir a violência atual, como a Guarda Civil."
-	},
+        question: "A polícia deveria ser uma força civil e não militarizada?",
+        answer: "Discute se a polícia deve ser civil para focar na comunidade e reduzir a violência atual, como a Guarda Civil."
+    },
   {
-    difficulty: 2,
-    category: "Esporte",
+    difficulty: 1,
+    category: "Economia",
     id: "004",
-    title: "Respeito às Minorias",
-		question: "Como combater os casos de desrespeito às minorias no futebol?",
-		answer: "Combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes."
-	},
+    title: "Pedir desconto",
+        question: "Pedir desconto é um direito ou uma cara de pau?",
+        answer: "Debate sobre a legitimidade de pedir desconto, considerando aspectos culturais e sociais."
+    },
 ];
 
 ////////////////////////////////////////////////////////////////////////////////////
+
+// Função para obter índices dos flashcards filtrados
+function getIndicesFiltrados() {
+  const opcoes = Array.from(document.querySelectorAll('.filtro-opcao'));
+  const todosNiveis = opcoes.find(o => o.dataset.todos === "true");
+  const selecionadas = opcoes.filter(o => o.classList.contains('ativado') && !o.dataset.todos);
+
+  if (todosNiveis && todosNiveis.classList.contains('ativado') || selecionadas.length === 0) {
+    return flashcards.map((_, idx) => idx);
+  }
+
+  const dificuldadesSelecionadas = selecionadas.map(o => o.textContent.trim());
+  return flashcards
+    .map((card, idx) => ({card, idx}))
+    .filter(({card}) => {
+      if (card.difficulty === 1 && dificuldadesSelecionadas.includes('Fácil')) return true;
+      if (card.difficulty === 2 && dificuldadesSelecionadas.includes('Médio')) return true;
+      if (card.difficulty === 3 && dificuldadesSelecionadas.includes('Difícil')) return true;
+      return false;
+    })
+    .map(({idx}) => idx);
+}
 
 // "virar" cartão ao clicar
 const card1 = document.getElementById('card-1');
@@ -197,7 +216,6 @@ function toggleCard() {
     cardHeader.classList.remove('hidden');
     card1.classList.remove('back');
     card1.classList.add('front');
-    
   } else {
     question.classList.add('hidden');
     cardTitle.classList.add('hidden');
@@ -216,39 +234,33 @@ let cardVisible = 0;
 let cardAnterior = 0;
 
 // Define o prefixo com base na dificuldade do cartão
-// F = Fácil, M = Médio, D = Difícil, X = Desconhecido
 function setPrefix() {
   let prefix = 0;
-
   switch (flashcards[cardVisible].difficulty) {
-    case 1:
-      prefix = 'F';
-      break;
-    case 2:
-      prefix = 'M';
-      break;
-    case 3:
-      prefix = 'D';
-      break;
-    default:
-      prefix = 'X';
-      break;
+    case 1: prefix = 'F'; break;
+    case 2: prefix = 'M'; break;
+    case 3: prefix = 'D'; break;
+    default: prefix = 'X'; break;
   }
-
   return prefix;
 }
 
 // Renderiza o cartão com os dados do flashcard atual
 function renderizarCartao() {
-  card1.setAttribute('data-difficulty', flashcards[cardVisible].difficulty);
-  difficulty.textContent = `${setPrefix()}${flashcards[cardVisible].id}`;
-  category.textContent = flashcards[cardVisible].category;
-  cardTitle.textContent = flashcards[cardVisible].title;
-  question.textContent = flashcards[cardVisible].question;
-  answer.textContent = flashcards[cardVisible].answer;
+  const indicesFiltrados = getIndicesFiltrados();
+  if (!indicesFiltrados.includes(cardVisible)) {
+    cardVisible = indicesFiltrados[0] || 0;
+  }
+  const card = flashcards[cardVisible];
+  card1.setAttribute('data-difficulty', card.difficulty);
+  difficulty.textContent = `${setPrefix()}${card.id}`;
+  category.textContent = card.category;
+  cardTitle.textContent = card.title;
+  question.textContent = card.question;
+  answer.textContent = card.answer;
 }
 
-renderizarCartao()
+renderizarCartao();
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -256,19 +268,15 @@ const btnAnterior = document.getElementById('btn-anterior');
 const btnProximo = document.getElementById('btn-proximo');
 
 btnProximo.addEventListener('click', function() {
+  const indicesFiltrados = getIndicesFiltrados();
   cardAnterior = cardVisible;
-  
-  let novoCard;
+  let novoIdx;
   do {
-    novoCard = Math.floor(Math.random() * flashcards.length);
-  } while (novoCard === cardVisible && flashcards.length > 1);
-  
-  cardVisible = novoCard;
-
+    novoIdx = indicesFiltrados[Math.floor(Math.random() * indicesFiltrados.length)];
+  } while (novoIdx === cardVisible && indicesFiltrados.length > 1);
+  cardVisible = novoIdx;
   renderizarCartao();
   atualizarIndicador();
-
-  // Se o cartão estiver virado, volta para o estado inicial
   if (!answer.classList.contains('hidden')) {
     answer.classList.add('hidden');
     toggleCard();
@@ -278,11 +286,8 @@ btnProximo.addEventListener('click', function() {
 btnAnterior.addEventListener('click', function() {
   if (cardVisible === cardAnterior) return;
   [cardVisible, cardAnterior] = [cardAnterior, cardVisible];
-
   renderizarCartao();
   atualizarIndicador();
-
-  // Se o cartão estiver virado, volta para o estado inicial
   if (!answer.classList.contains('hidden')) {
     answer.classList.add('hidden');
     toggleCard();
@@ -292,10 +297,11 @@ btnAnterior.addEventListener('click', function() {
 ////////////////////////////////////////////////////////////////////////////////////
 
 // Atualiza o indicador de cartão visível
-// Exibe o número do cartão atual e o total de cartões
 function atualizarIndicador() {
+  const indicesFiltrados = getIndicesFiltrados();
   const indicador = document.querySelector('.indicador');
-  indicador.textContent = `Card ${cardVisible + 1} de ${flashcards.length}`;
+  const posicao = indicesFiltrados.indexOf(cardVisible) + 1;
+  indicador.textContent = `Card ${posicao} de ${indicesFiltrados.length}`;
 }
 
-atualizarIndicador()
+atualizarIndicador();
