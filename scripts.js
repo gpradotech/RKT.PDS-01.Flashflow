@@ -1,13 +1,18 @@
+// Seleciona o botão de filtro e o painel de opções do filtro
 const filtroBotao = document.querySelector('.filtro-botao');
 const filtroOpcoes = document.querySelector('.filtro-opcoes');
 
-// Atualiza texto do botão de filtro
+// Função para atualizar o texto do botão de filtro conforme as opções selecionadas
 function atualizarTextoBotao() {
+  // Pega todas as opções de filtro
   const opcoes = Array.from(document.querySelectorAll('.filtro-opcao'));
+  // Filtra as opções que estão ativadas e não são "Todos os níveis"
   const selecionadas = opcoes.filter(o => o.classList.contains('ativado') && !o.dataset.todos);
+  // Encontra a opção "Todos os níveis"
   const todosNiveis = opcoes.find(o => o.dataset.todos === "true");
   let texto = '';
 
+  // Define o texto do botão de acordo com as opções selecionadas
   if (todosNiveis && todosNiveis.classList.contains('ativado')) {
     texto = 'Todos os níveis';
   } else if (selecionadas.length === 1) {
@@ -18,26 +23,28 @@ function atualizarTextoBotao() {
     texto = selecionadas.map(o => o.textContent.trim()).join(', ');
   }
 
+  // Atualiza o texto do botão de filtro
   filtroBotao.querySelector('span').textContent = texto;
 }
 
+// Seleciona o ícone de seta (caret) do botão de filtro
 const caret = filtroBotao.querySelector('.ph.ph-caret-down');
 
-// Alterna painel de opções e rotaciona caret
+// Adiciona evento de clique ao botão de filtro para abrir/fechar o painel de opções
 filtroBotao.addEventListener('click', function(e) {
-  e.stopPropagation();
-  filtroOpcoes.classList.toggle('ativado');
+  e.stopPropagation(); // Impede que o clique se propague para outros elementos
+  filtroOpcoes.classList.toggle('ativado'); // Mostra ou esconde o painel de opções
   if (filtroOpcoes.classList.contains('ativado')) {
-    caret.classList.add('rotacionado');
+    caret.classList.add('rotacionado'); // Rotaciona o ícone
     filtroBotao.classList.add('ativado');
   } else {
     caret.classList.remove('rotacionado');
     filtroBotao.classList.remove('ativado');
   }
-  atualizarTextoBotao();
+  atualizarTextoBotao(); // Atualiza o texto do botão
 });
 
-// Fecha painel ao clicar fora
+// Fecha o painel de opções ao clicar fora dele
 document.addEventListener('click', function(e) {
   if (filtroOpcoes.classList.contains('ativado')) {
     if (!filtroOpcoes.contains(e.target) && !filtroBotao.contains(e.target)) {
@@ -48,37 +55,41 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Atualiza texto do botão sempre que uma opção for clicada
+// Atualiza o texto do botão sempre que uma opção de filtro for clicada
 document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
   opcao.addEventListener('click', function() {
-    setTimeout(atualizarTextoBotao, 0);
+    setTimeout(atualizarTextoBotao, 0); // Usa setTimeout para garantir atualização após o clique
   });
 });
 
-// Atualiza ao carregar
+// Atualiza o texto do botão ao carregar a página
 atualizarTextoBotao();
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// Lógica para ativar/desativar opções de filtro
+// Lógica para ativar/desativar as opções de filtro
 document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
   opcao.addEventListener('click', function() {
+    // Pega todas as opções de filtro
     const todasOpcoes = Array.from(document.querySelectorAll('.filtro-opcao'));
+    // Encontra a opção "Todos os níveis"
     const todosNiveis = todasOpcoes.find(o => o.dataset.todos === "true");
+    // Filtra as outras opções (exceto "Todos os níveis")
     const outras = todasOpcoes.filter(o => o !== todosNiveis);
 
     // Se clicou em "Todos os níveis"
     if (opcao.dataset.todos === "true") {
       if (opcao.classList.contains('ativado')) {
-        return;
+        return; // Se já está ativado, não faz nada
       }
+      // Ativa todas as opções
       todasOpcoes.forEach(o => {
         o.classList.add('ativado');
         const icone = o.querySelector('.ph-check');
         if (icone) icone.setAttribute('aria-label', 'Ativado');
       });
     } else {
-      // Se todas as opções (exceto "Todos os níveis") estão ativas, ao clicar em uma delas, deixa só ela ativa
+      // Se todas as opções (menos "Todos os níveis") estão ativas, ao clicar em uma delas, deixa só ela ativa
       const todasAtivadas = outras.every(o => o.classList.contains('ativado'));
       if (todasAtivadas) {
         outras.forEach(o => {
@@ -89,7 +100,7 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
         opcao.classList.add('ativado');
         const icone = opcao.querySelector('.ph-check');
         if (icone) icone.setAttribute('aria-label', 'Ativado');
-        // Desmarca "Todos os níveis"
+        // Desativa "Todos os níveis"
         todosNiveis.classList.remove('ativado');
         const iconeTodos = todosNiveis.querySelector('.ph-check');
         if (iconeTodos) iconeTodos.setAttribute('aria-label', 'Desativado');
@@ -106,7 +117,7 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
         );
       }
 
-      // Verifica se ficou tudo desmarcado (exceto "Todos os níveis")
+      // Se nenhuma opção (exceto "Todos os níveis") ficou ativada, ativa todas
       const nenhumaAtivada = !outras.some(o => o.classList.contains('ativado'));
       if (nenhumaAtivada) {
         todasOpcoes.forEach(o => {
@@ -131,7 +142,7 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
         if (iconeTodos) iconeTodos.setAttribute('aria-label', 'Desativado');
       }
     }
-    // Atualiza os cards filtrados
+    // Atualiza os cartões filtrados e o indicador
     setTimeout(() => {
       renderizarCartao();
       atualizarIndicador();
@@ -141,6 +152,7 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
 
 ////////////////////////////////////////////////////////////////////////////////////
 
+// Array de objetos com os dados dos flashcards
 const flashcards = [
     {
     difficulty: 2,
@@ -178,17 +190,20 @@ const flashcards = [
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// Função para obter índices dos flashcards filtrados
+// Função que retorna os índices dos flashcards filtrados conforme as opções selecionadas
 function getIndicesFiltrados() {
   const opcoes = Array.from(document.querySelectorAll('.filtro-opcao'));
   const todosNiveis = opcoes.find(o => o.dataset.todos === "true");
   const selecionadas = opcoes.filter(o => o.classList.contains('ativado') && !o.dataset.todos);
 
+  // Se "Todos os níveis" está ativado ou nenhuma opção está selecionada, retorna todos os índices
   if (todosNiveis && todosNiveis.classList.contains('ativado') || selecionadas.length === 0) {
     return flashcards.map((_, idx) => idx);
   }
 
+  // Pega os textos das dificuldades selecionadas
   const dificuldadesSelecionadas = selecionadas.map(o => o.textContent.trim());
+  // Filtra os flashcards conforme a dificuldade selecionada
   return flashcards
     .map((card, idx) => ({card, idx}))
     .filter(({card}) => {
@@ -200,7 +215,7 @@ function getIndicesFiltrados() {
     .map(({idx}) => idx);
 }
 
-// "virar" cartão ao clicar
+// Seleciona elementos do cartão na tela
 const card1 = document.getElementById('card-1');
 const cardHeader = card1.querySelector('.card-header');
 const category = card1.querySelector('.category');
@@ -209,14 +224,17 @@ const cardTitle = card1.querySelector('.card-content .title');
 const answer = card1.querySelector('.answer');
 const question = card1.querySelector('.question');
 
+// Função para alternar entre frente e verso do cartão (mostrar pergunta ou resposta)
 function toggleCard() {
   if (answer.classList.contains('hidden')) {
+    // Mostra a pergunta (frente do cartão)
     question.classList.remove('hidden');
     cardTitle.classList.remove('hidden');
     cardHeader.classList.remove('hidden');
     card1.classList.remove('back');
     card1.classList.add('front');
   } else {
+    // Mostra a resposta (verso do cartão)
     question.classList.add('hidden');
     cardTitle.classList.add('hidden');
     cardHeader.classList.add('hidden');
@@ -224,16 +242,18 @@ function toggleCard() {
     card1.classList.remove('front');
   }
 }
+
+// Adiciona evento de clique para virar o cartão
 card1.addEventListener('click', function() {
   answer.classList.toggle('hidden');
   toggleCard();
 });
 
-// Renderiza o conteúdo do cartão inicial
+// Variáveis para controlar o cartão visível e o anterior
 let cardVisible = 0;
 let cardAnterior = 0;
 
-// Define o prefixo com base na dificuldade do cartão
+// Função para definir o prefixo da dificuldade (F, M, D)
 function setPrefix() {
   let prefix = 0;
   switch (flashcards[cardVisible].difficulty) {
@@ -245,9 +265,10 @@ function setPrefix() {
   return prefix;
 }
 
-// Renderiza o cartão com os dados do flashcard atual
+// Função para renderizar o cartão na tela com os dados do flashcard atual
 function renderizarCartao() {
   const indicesFiltrados = getIndicesFiltrados();
+  // Se o cartão atual não está nos filtrados, mostra o primeiro filtrado
   if (!indicesFiltrados.includes(cardVisible)) {
     cardVisible = indicesFiltrados[0] || 0;
   }
@@ -260,34 +281,41 @@ function renderizarCartao() {
   answer.textContent = card.answer;
 }
 
+// Renderiza o cartão ao carregar a página
 renderizarCartao();
 
 ////////////////////////////////////////////////////////////////////////////////////
 
+// Seleciona os botões de navegação (anterior e próximo)
 const btnAnterior = document.getElementById('btn-anterior');
 const btnProximo = document.getElementById('btn-proximo');
 
+// Evento para mostrar um novo cartão aleatório ao clicar em "Próximo"
 btnProximo.addEventListener('click', function() {
   const indicesFiltrados = getIndicesFiltrados();
   cardAnterior = cardVisible;
   let novoIdx;
+  // Garante que o novo cartão não seja o mesmo que o atual (se houver mais de um)
   do {
     novoIdx = indicesFiltrados[Math.floor(Math.random() * indicesFiltrados.length)];
   } while (novoIdx === cardVisible && indicesFiltrados.length > 1);
   cardVisible = novoIdx;
   renderizarCartao();
   atualizarIndicador();
+  // Se a resposta estiver visível, esconde ao trocar de cartão
   if (!answer.classList.contains('hidden')) {
     answer.classList.add('hidden');
     toggleCard();
   }
 });
 
+// Evento para voltar ao cartão anterior ao clicar em "Anterior"
 btnAnterior.addEventListener('click', function() {
-  if (cardVisible === cardAnterior) return;
-  [cardVisible, cardAnterior] = [cardAnterior, cardVisible];
+  if (cardVisible === cardAnterior) return; // Se já está no anterior, não faz nada
+  [cardVisible, cardAnterior] = [cardAnterior, cardVisible]; // Troca os valores
   renderizarCartao();
   atualizarIndicador();
+  // Esconde a resposta se estiver visível
   if (!answer.classList.contains('hidden')) {
     answer.classList.add('hidden');
     toggleCard();
@@ -296,7 +324,7 @@ btnAnterior.addEventListener('click', function() {
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// Atualiza o indicador de cartão visível
+// Função para atualizar o indicador de posição do cartão (ex: "Card 2 de 4")
 function atualizarIndicador() {
   const indicesFiltrados = getIndicesFiltrados();
   const indicador = document.querySelector('.indicador');
@@ -304,4 +332,5 @@ function atualizarIndicador() {
   indicador.textContent = `Card ${posicao} de ${indicesFiltrados.length}`;
 }
 
+// Atualiza o indicador ao carregar a página
 atualizarIndicador();
