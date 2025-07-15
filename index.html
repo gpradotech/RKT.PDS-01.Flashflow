@@ -13,11 +13,11 @@
   <meta name="author" content="Gustavo Prado">
 
   <!-- title -->
-  <title>FlashTalk | Gerador de Debates</title>
+  <title>FlashTalk | Plataforma de Debates Interativos</title>
   <!-- favicon -->
   <link rel="icon" href="images/favicon.svg" type="image/x-icon">
   
-  <!-- stylesheets -->
+  <!-- css -->
   <link rel="stylesheet" type="text/css" href="styles.css">
   <!-- icons -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
@@ -31,26 +31,26 @@
   </header>
   
   <main>
-    <div class="main-header">
+    <header class="main-header">
       <p class="indicador">Card 1 de 5</p>
-      <div class="filtro">
+      <nav class="filtro" aria-label="Filtros de Dificuldade">
         <button class="filtro-botao">
           <span>Todos os níveis</span>
           <i class="ph ph-caret-down" aria-hidden="true"></i>
         </button>
 
-        <div class="filtro-opcoes">
-          <div class="filtro-heading">Dificuldade</div>
-          <button class="filtro-opcao ativado" data-nivel="1" data-todos="true"> <span>Todos os níveis</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
-          <button class="filtro-opcao ativado" data-nivel="2"> <span>Fácil</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
-          <button class="filtro-opcao ativado" data-nivel="3"> <span>Médio</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
-          <button class="filtro-opcao ativado" data-nivel="4"> <span>Difícil</span> <i class="ph ph-check" aria-label="Ativado"></i> </button>
-        </div>    
-      </div>
-    </div>
+        <ul class="filtro-opcoes">
+          <li class="filtro-heading">Dificuldade</li>
+          <li class="filtro-opcao ativado" data-nivel="1" data-todos="true"> <span>Todos os níveis</span> <i class="ph ph-check" aria-label="Ativado"></i> </li>
+          <li class="filtro-opcao ativado" data-nivel="2"> <span>Fácil</span> <i class="ph ph-check" aria-label="Ativado"></i> </li>
+          <li class="filtro-opcao ativado" data-nivel="3"> <span>Médio</span> <i class="ph ph-check" aria-label="Ativado"></i> </li>
+          <li class="filtro-opcao ativado" data-nivel="4"> <span>Difícil</span> <i class="ph ph-check" aria-label="Ativado"></i> </li>
+        </ul>    
+      </nav>
+    </header>
 
     <div class="cards">
-      <div class="card front" id="card-1" data-nivel="1" data-tipo="educação">
+      <button class="card front" id="card-1" data-nivel="1" data-tipo="educação">
         <header class="card-header">
           <span class="category">Esporte</span>
           <span class="difficulty">M001</span>
@@ -61,15 +61,15 @@
           <p class="question">Como combater os casos de desrespeito às minorias no futebol?</p>
           <p class="answer hidden">Combate ao desrespeito no futebol, como os crimes de racismo e homofobia, com punições e educação da torcida e clubes.</p>
         </div>
-      </div>
+      </button>
     </div>
 
     <p class="main-footer">Clique no card para ver a dica</p>
   </main>
 
   <footer class="page-footer">
-    <button class="btn secondary" id="btn-anterior">Card Anterior</button>
-    <button class="btn primary" id="btn-proximo">Próximo Card</button>
+    <button class="btn secondary" id="btn-anterior" aria-label="Exibir o card anterior">Card Anterior</button>
+    <button class="btn primary" id="btn-proximo" aria-label="Exibir o próximo card">Próximo Card</button>
   </footer>
 
   <script src="scripts.js"></script>
