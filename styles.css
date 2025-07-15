@@ -14,11 +14,11 @@
   --ff-heading: 'Sora', sans-serif;
   --ff-body: 'Inter', sans-serif;
 
-  --fs-xl: 32px;
-  --fs-lg: 24px;
-  --fs-base: 16px;
-  --fs-md: 14px;
-  --fs-sm: 14px;
+  --fs-xl: 2rem;
+  --fs-lg: 1.5rem;
+  --fs-base: 1rem;
+  --fs-md: 0.875rem;
+  --fs-sm: 0.875rem;
 
   --fw-medium: 500;
   --fw-semibold: 600;
@@ -30,3 +30,131 @@
   --font-body-sm: normal  var(--fw-medium)    var(--fs-sm)var(--ff-body);
   --font-button: normal   var(--fw-semibold)  var(--fs-sm)  var(--ff-body);
 }
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--ff-body);
+  color: var(--color-gray-200);
+}
+
+h1 {
+  font: var(--font-title);
+  color: var(--color-purple-200);
+}
+
+header {
+  display: grid;
+  gap: 8px;
+  justify-content: center;
+  text-align: center;
+  margin-top: 88px
+}
+
+main {
+  width: 324px;
+  margin-block: 48px 32px; 
+}
+
+.controles {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font: var(--font-body-md);
+}
+
+.filtro {
+  position: relative;
+}
+
+.filtro-botao {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  opacity: 0.75;
+  font: var(--font-body-sm);
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.filtro-botao:hover {
+  opacity: 1;
+}
+
+.filtro-botao.ativado,
+.filtro-opcao.ativado {
+  color: var(--color-purple-300);
+  opacity: 1;
+}
+
+.ph.ph-caret-down {
+  transition: transform 0.2s;
+}
+
+.ph.ph-caret-down.rotacionado {
+  transform: rotate(180deg);
+}
+
+.filtro-opcoes {
+  border-radius: 8px;
+  border: 1px solid var(--gray-100, #E2E2E2);
+  box-shadow: 0px 45px 12px 0px rgba(0, 0, 0, 0.00), 0px 29px 11px 0px rgba(0, 0, 0, 0.01), 0px 16px 10px 0px rgba(0, 0, 0, 0.05), 0px 7px 7px 0px rgba(0, 0, 0, 0.09), 0px 2px 4px 0px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+  position: absolute;
+  padding-block: 8px;
+
+  display: none;
+}
+
+.filtro-opcoes.ativado {
+  display: block;
+  z-index: 1;
+  top: 100%;
+  right: 0;
+}
+
+.filtro-heading,
+.filtro-opcao {
+    background: var(--color-white);
+    border: none;
+    width: 100%;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    font: var(--font-body-sm);
+    gap: 8px;
+    white-space: nowrap;
+    color: var(--color-gray-200);
+  }
+
+  .filtro-heading {
+    border-bottom: 1px solid var(--color-gray-100);
+    font-weight: var(--fw-semibold);
+    padding-bottom: 12px;
+  }
+
+  .filtro-opcao {
+    cursor: pointer;
+    transition: background 0.1s ease;
+  }
+
+  .filtro-opcao:hover {
+    background: var(--color-purple-100);
+        color: var(--color-gray-300);
+  }
+
+  .ph-check {
+    color: var(--color-purple-300);
+    opacity: 0;
+  }
+
+  .filtro-opcao.ativado .ph-check {
+    opacity: 1;
+  }
