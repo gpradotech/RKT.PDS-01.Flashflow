@@ -142,10 +142,10 @@ document.querySelectorAll('.filtro-opcao').forEach(function(opcao) {
         if (iconeTodos) iconeTodos.setAttribute('aria-label', 'Desativado');
       }
     }
-    // Atualiza os cartões filtrados e o indicador
+    // Atualiza os cartões filtrados e o pagination
     setTimeout(() => {
       renderizarCartao();
-      atualizarIndicador();
+      atualizarpagination();
     }, 0);
   });
 });
@@ -301,7 +301,7 @@ btnProximo.addEventListener('click', function() {
   } while (novoIdx === cardVisible && indicesFiltrados.length > 1);
   cardVisible = novoIdx;
   renderizarCartao();
-  atualizarIndicador();
+  atualizarpagination();
   // Se a resposta estiver visível, esconde ao trocar de cartão
   if (!answer.classList.contains('hidden')) {
     answer.classList.add('hidden');
@@ -314,7 +314,7 @@ btnAnterior.addEventListener('click', function() {
   if (cardVisible === cardAnterior) return; // Se já está no anterior, não faz nada
   [cardVisible, cardAnterior] = [cardAnterior, cardVisible]; // Troca os valores
   renderizarCartao();
-  atualizarIndicador();
+  atualizarpagination();
   // Esconde a resposta se estiver visível
   if (!answer.classList.contains('hidden')) {
     answer.classList.add('hidden');
@@ -324,13 +324,13 @@ btnAnterior.addEventListener('click', function() {
 
 ////////////////////////////////////////////////////////////////////////////////////
 
-// Função para atualizar o indicador de posição do cartão (ex: "Card 2 de 4")
-function atualizarIndicador() {
+// Função para atualizar o pagination de posição do cartão (ex: "Card 2 de 4")
+function atualizarpagination() {
   const indicesFiltrados = getIndicesFiltrados();
-  const indicador = document.querySelector('.indicador');
+  const pagination = document.querySelector('.pagination');
   const posicao = indicesFiltrados.indexOf(cardVisible) + 1;
-  indicador.textContent = `Card ${posicao} de ${indicesFiltrados.length}`;
+  pagination.textContent = `Card ${posicao} de ${indicesFiltrados.length}`;
 }
 
-// Atualiza o indicador ao carregar a página
-atualizarIndicador();
+// Atualiza o pagination ao carregar a página
+atualizarpagination();
